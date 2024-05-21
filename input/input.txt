@@ -998,3 +998,4 @@
 998	Zorn	anger
 999	Anspruch	claim
 1000	Kontinent	continent
+1001	prima	great
