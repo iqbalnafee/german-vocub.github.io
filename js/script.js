@@ -1,6 +1,5 @@
 $(document).ready(function() {
     makeDataTable();
-    readTextFile('input/input.txt');
     
 });
 async function makeDataTable() {
