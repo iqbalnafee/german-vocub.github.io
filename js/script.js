@@ -1,25 +1,38 @@
 $(document).ready(function() {
+    makeDataTable();
     readTextFile('input/input.txt');
+    
 });
-  function readTextFile(file)
+async function makeDataTable() {
+    let text = await readTextFile('input/input.txt');
+    setTextToTable(text);
+    $("#example").DataTable();
+    $('#dt-length-0').addClass('m-2');
+}
+function readTextFile(file)
 {
-    let rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    { 
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            { 
-                let allText = rawFile.responseText;
-                setTextToTable(allText);
+
+    return new Promise((resolve) => {
+        let rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        { 
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                { 
+                    resolve(rawFile.responseText);
+                }
             }
         }
-    }
-    rawFile.send(null);
+        rawFile.send(null);
+      });
+
+    
 }
 
 function setTextToTable(text){
+    console.log('resssss');
     let splitByLine = text.split('\n');
     let tr ='';
     let td ='';
@@ -31,8 +44,6 @@ function setTextToTable(text){
         bgColor = '';
         if(i%3 == 1) bgColor=red;
         else if(i%3 == 2) bgColor = yellow;
-
-        if(i<10) console.log(i+" text: "+line+ " "+bgColor);
         tr += `<tr>`;
         td = '';
         let splitByWord = line.split('\t');
@@ -45,6 +56,5 @@ function setTextToTable(text){
 
     });
     $('#tbody').append(tr);
-    $("#example").DataTable();
-    $('#dt-length-0').addClass('m-2');
+    
 }
