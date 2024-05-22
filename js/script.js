@@ -31,7 +31,6 @@ function readTextFile(file)
 }
 
 function setTextToTable(text){
-    console.log('resssss');
     let splitByLine = text.split('\n');
     let tr ='';
     let td ='';
