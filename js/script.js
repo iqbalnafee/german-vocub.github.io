@@ -1,12 +1,25 @@
+let loaderCls = 'loader';
+let containerCls = 'container';
+let hiddenElement = 'hiddenElement';
 $(document).ready(function() {
     makeDataTable();
     
 });
 async function makeDataTable() {
+    showLoader();
     let text = await readTextFile('input/input.txt');
     setTextToTable(text);
     $("#example").DataTable();
     $('#dt-length-0').addClass('m-2');
+    hideLoader();
+}
+function showLoader(){
+    $('.'+loaderCls).removeClass(hiddenElement);
+    $('.'+containerCls).addClass(hiddenElement);
+}
+function hideLoader(){
+    $('.'+loaderCls).addClass(hiddenElement);
+    $('.'+containerCls).removeClass(hiddenElement);
 }
 function readTextFile(file)
 {
@@ -20,7 +33,10 @@ function readTextFile(file)
             {
                 if(rawFile.status === 200 || rawFile.status == 0)
                 { 
-                    resolve(rawFile.responseText);
+                    setTimeout(() => {
+                        resolve(rawFile.responseText);
+                      }, 2000);
+                    
                 }
             }
         }
