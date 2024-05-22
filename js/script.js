@@ -38,21 +38,25 @@ function setTextToTable(text){
     let yellow = 'bg-warning';
     let bgColor = '';
     splitByLine.forEach((line,i) => {
-        
-        bgColor = '';
-        if(i%3 == 1) bgColor=red;
-        else if(i%3 == 2) bgColor = yellow;
-        tr += `<tr>`;
-        td = '';
-        let splitByWord = line.split('\t');
-        splitByWord.forEach((word) => {
-            td += `<td class=${bgColor}>${word.trim()}</td>`;
-            
-        });
-        tr += td;
-        tr += `</tr>`;
-
+        if(!isBlank(line)) {
+            bgColor = '';
+            if(i%3 == 1) bgColor=red;
+            else if(i%3 == 2) bgColor = yellow;
+            tr += `<tr>`;
+            td = '';
+            let splitByWord = line.split('\t');
+            splitByWord.forEach((word) => {
+                td += `<td class=${bgColor}>${word.trim()}</td>`;
+                
+            });
+            tr += td;
+            tr += `</tr>`;
+        }
     });
     $('#tbody').append(tr);
     
+}
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
 }
